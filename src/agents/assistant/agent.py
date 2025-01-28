@@ -8,7 +8,7 @@ dotenv.load_dotenv()
 llm = ChatOpenAI(model="gpt-4o")
 
 # System message
-sys_msg = SystemMessage(content="You are a helpful that can talk about every topic, besides Civil Engineering.")
+sys_msg = SystemMessage(content="You are a helpful assistant that can talk about every topic, besides Civil Engineering.")
 
 # Node
 def assistant(state: MessagesState):
