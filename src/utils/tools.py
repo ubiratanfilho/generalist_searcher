@@ -5,4 +5,4 @@ from langchain_core.tools import tool
 dotenv.load_dotenv()
 
 # tool for web search
-web_search = TavilySearchResults(max_results=3)
+web_search = TavilySearchResults(max_results=10)
