@@ -6,5 +6,5 @@ config = {"configurable": {"thread_id": "1"}}
 while True:
     question = input("User: ")
     response = graph.invoke({"question": question}, config)
-    # response = response['messages'][-1].content
+    response = response['answer'].content
     print("Bot: ", response)

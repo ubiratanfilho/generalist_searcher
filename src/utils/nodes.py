@@ -26,7 +26,7 @@ def search_web(state):
 
     return {"context": [formatted_search_docs]} 
 
-def generate_answer(state):
+def assistant(state):
     
     """ Node to answer a question """
 
@@ -37,9 +37,10 @@ def generate_answer(state):
     question = state["question"]
 
     # Template
-    answer_template = """Answer the question {question} using this context: {context}"""
-    answer_instructions = answer_template.format(question=question, 
-                                                       context=context)    
+    answer_template = """You are a helpful assistant that can answer questions about anything except Civil Engineering. 
+    Answer the question: '{question}' in the context of the following documents: '{context}'
+    """
+    answer_instructions = answer_template.format(question=question, context=context)    
     
     # Answer
     answer = llm.invoke([SystemMessage(content=answer_instructions)]+[HumanMessage(content=f"Answer the question.")])

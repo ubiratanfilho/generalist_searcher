@@ -2,7 +2,9 @@ from langgraph.graph import START, END, StateGraph, MessagesState
 from langgraph.prebuilt import tools_condition, ToolNode
 from langgraph.checkpoint.memory import MemorySaver
 
-from typing import Annotated
+from langchain_core.messages import BaseMessage
+
+from typing import Annotated, List
 
 import operator
 
@@ -21,11 +23,18 @@ class State(TypedDict):
 builder = StateGraph(State)
 
 builder.add_node("search_web", search_web)
-builder.add_node("generate_answer", generate_answer)
+builder.add_node("assistant", assistant)
 
-builder.add_edge(START, "search_web")
-builder.add_edge("search_web", "generate_answer")
-builder.add_edge("generate_answer", END)
+builder.add_edge(START, "assistant")
+
+def conditional_search(state: List[BaseMessage]) -> str:
+    if len(state["context"]) == 0:
+        return "search_web"
+    return END
+
+builder.add_conditional_edges("assistant", conditional_search)
+builder.add_edge("search_web", "assistant")
+
 
 graph = builder.compile(checkpointer=MemorySaver())
 
