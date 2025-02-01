@@ -4,6 +4,7 @@ from langgraph.graph import MessagesState
 from langgraph.types import Command
 from langchain_core.messages import SystemMessage, HumanMessage
 from typing_extensions import Literal
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from utils.tools import *
 
 dotenv.load_dotenv()
@@ -14,7 +15,7 @@ def search_web(state):
 
     # Search
     tavily_search = TavilySearchResults(max_results=3)
-    search_docs = tavily_search.invoke(state['question'])
+    search_docs = tavily_search.invoke(state['messages'][-1].content)
 
     # Format
     formatted_search_docs = "\n\n---\n\n".join(
@@ -34,16 +35,22 @@ def assistant(state):
     
     # Get state
     context = state["context"]
-    question = state["question"]
+    messages = state["messages"]
 
     # Template
-    answer_template = """You are a helpful assistant that can answer questions about anything except Civil Engineering. 
-    Answer the question: '{question}' in the context of the following documents: '{context}'
-    """
-    answer_instructions = answer_template.format(question=question, context=context)    
-    
+    answer_template = ChatPromptTemplate.from_messages(
+        [
+            (
+                "system", 
+                "You are a helpful assistant that can answer questions about anything except Civil Engineering."
+                "Use the context of the following documents to answer the user: '{context}'"
+            ),
+            MessagesPlaceholder(variable_name="messages")
+        ]
+    )
+    chain = answer_template | llm
     # Answer
-    answer = llm.invoke([SystemMessage(content=answer_instructions)]+[HumanMessage(content=f"Answer the question.")])
-      
+    answer = chain.invoke({"messages": messages, "context": context})
+    
     # Append it to state
-    return {"answer": answer}
+    return {"messages": [answer]}

@@ -14,11 +14,9 @@ from utils.nodes import *
 from utils.tools import *
 
 # States
-class State(TypedDict):
-    question: str
-    answer: str
+class State(MessagesState):
     context: Annotated[list, operator.add]
-    
+
 # Graph
 builder = StateGraph(State)
 
