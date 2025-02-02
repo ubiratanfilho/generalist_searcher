@@ -28,7 +28,7 @@ Esse repositório contém um chatbot que responde sobre qualquer tema não relac
    curl --location 'http://localhost:5002/generate_answer' \
       --header 'Content-Type: application/json' \
       --data '{
-         "question": "Quando é o próximo jogo do Palmeiras?",
-         "thread_id": 2
+         "question": "Escreva um relatorio comparativo entre os modelos DeepSeekR1 e OpenAI o1",
+         "thread_id": 10000
       }'
    ```

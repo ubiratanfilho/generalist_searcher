@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"question\": \"Quando é o próximo jogo do Palmeiras?\",\r\n    \"thread_id\": 2\r\n}",
+					"raw": "{\r\n    \"question\": \"Faça um relatório comparativo entre os modelos DeepSeekR1 e OpenAI o1\",\r\n    \"thread_id\": 4\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
