@@ -11,6 +11,8 @@ def generate_answer():
     
     if not question:
         return jsonify({"error": "Parâmetro 'question' não fornecido."}), 400
+    if not thread_id:
+        return jsonify({"error": "Parâmetro 'thread_id' não fornecido."}), 400
 
     config = {"configurable": {"thread_id": thread_id}}
     response = graph.invoke({"messages": [("user", question)], "question": question, "context": [], "web_search": False}, config)

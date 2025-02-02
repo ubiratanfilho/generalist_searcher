@@ -31,5 +31,5 @@ builder.add_edge("search_web", "assistant")
 
 graph = builder.compile(checkpointer=MemorySaver())
 
-with open("images/graph.png", "wb") as f:
-    f.write(graph.get_graph(xray=True).draw_mermaid_png())
+# with open("images/graph.png", "wb") as f:
+#     f.write(graph.get_graph(xray=True).draw_mermaid_png())
