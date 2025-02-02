@@ -1,13 +1,9 @@
-import dotenv
-
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from langchain_community.tools import TavilySearchResults
 
 from pydantic import BaseModel, Field
-
-dotenv.load_dotenv()
 
 class NeedWebSearch(BaseModel):
     """Boolean flag to indicate if web search is needed"""
